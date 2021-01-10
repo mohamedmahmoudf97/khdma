@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <!-- <router-view /> -->
     <div v-if="isLogin">
-      <Dashboard user="userName" />
       <!--  this component will show after login -->
+      <Dashboard user="userName" />
     </div>
     <div v-else>
-      <Login />
       <!--  this component will show before login -->
+      <Login />
     </div>
   </div>
 </template>
