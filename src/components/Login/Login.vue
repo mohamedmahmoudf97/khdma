@@ -80,13 +80,13 @@ import axios from "axios";
 
 export default {
   name: "Login",
-  props: ["iferror"],
   data() {
     return {
       form: {
         email: "",
         password: ""
-      }
+      },
+      iferror: false
     };
   },
   methods: {
@@ -102,8 +102,7 @@ export default {
         .catch(error => {
           // 401 if (Email Or password) is error get from laravel
           console.log(error, "catch");
-
-          that.$emit("error", "");
+          that.iferror = true;
         })
         .finally(() => {
           console.log("finally");

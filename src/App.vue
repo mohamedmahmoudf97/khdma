@@ -19,7 +19,7 @@
 
     <div v-else>
       <!--  this component will show before login -->
-      <Login @loginOn="loginOn" @error="error" :iferror="iferror" />
+      <Login @loginOn="loginOn" />
     </div>
   </div>
 </template>
@@ -48,9 +48,6 @@ export default {
   methods: {
     loginOn() {
       this.isLogin = true;
-    },
-    error() {
-      this.iferror = true;
     }
   }
 };
