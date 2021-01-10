@@ -1,22 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import Home from "../App.vue";
 import NotFound from "../views/NotFound.vue";
+import Dashboard from "@/components/Dashboard/Dashboard.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  // path: "/",
-  // name: "Home",
-  // component: Home
-  //  },
-  {
-    path: "/:id",
-    name: "NotFound",
-    component: NotFound
-  }
+  { path: "/", name: "Dashboard", component: Dashboard },
+  { path: "/:id", name: "NotFound", component: NotFound }
+
   // {
   //   path: "/about",
   //   name: "About",

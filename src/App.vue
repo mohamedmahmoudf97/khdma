@@ -2,40 +2,60 @@
   <div id="app">
     <div v-if="isLogin">
       <!--  this component will show after login -->
-      <Dashboard user="userName" />
+      <Dashboard />
+      <!-- Page Wrapper -->
+      <div id="wrapper">
+        <Sidebar />
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+          <!-- Main Content -->
+          <div id="content">
+            <Navbar />
+            <router-view />
+          </div>
+        </div>
+      </div>
     </div>
+
     <div v-else>
       <!--  this component will show before login -->
-      <Login />
+      <Login @loginOn="loginOn" @error="error" :iferror="iferror" />
     </div>
   </div>
 </template>
 
 <script>
-import Dashboard from "@/components/Dashboard/Dashboard.vue";
+require("jquery/src/jquery");
+require("bootstrap/dist/js/bootstrap.bundle.min");
+require("@fortawesome/fontawesome-free/css/all.min.css");
+
+import Sidebar from "@/components/layouts/Sidebar.vue";
+import Navbar from "@/components/layouts/Navbar.vue";
 import Login from "@/components/Login/Login.vue";
 
 export default {
   data() {
     return {
-      isLogin: true
+      isLogin: false,
+      iferror: false
     };
   },
   components: {
-    Dashboard,
+    Sidebar,
+    Navbar,
     Login
+  },
+  methods: {
+    loginOn() {
+      this.isLogin = true;
+    },
+    error() {
+      this.iferror = true;
+    }
   }
 };
 </script>
 
-<style lang="scss">
-* {
-  // simple reset for all tags
-  margin: 0;
-  padding: 0;
-  color: inherit;
-  box-sizing: border-box;
-  list-style: none;
-  outline: none;
-}
+<style scoped>
+@import "assets/css/sb-admin-2.css";
 </style>

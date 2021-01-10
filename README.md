@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# khdma
+=======
 # khdma
 
 ## Project setup
@@ -27,3 +30,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+>>>>>>> a442c730c7c9231f4d11d607d363c5157cad6795
