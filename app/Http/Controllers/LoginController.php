@@ -64,21 +64,28 @@ class LoginController extends Controller
                 'email' => $user->email,
                 'mobile' => $user->mobile ?? '',
                 'avatar' => $user->avatar ?? '',
-
                 'type' => $guard
             ]
         ], 200);
     }
     // get the user
-    private function getUser(Request $request)
+    public function getUser()
     {
-        $user = null;
-        if (!empty($request->email)) {
-            $user = User::with('images')->where('email', $request->email)->first();
-        } else if (!empty($request->mobile)) {
-            $user = User::with('images')->where('mobile', $request->mobile)->first();
+        if (auth()->user()) {
+            return response()->json([
+                'successful' => '1',
+                'status' => '01',
+                'user' => auth()->user(),
+                // 'token_type' => 'bearer',
+                // 'expires_in' => auth()->factory()->getTTL() * 60
+            ],200);
+        }else{
+            return response()->json([
+                'successful' => '1',
+                'status' => '02',
+                'error' => 'Unauthorized'
+            ], 401);
         }
-        return $user;
     }
     /**
      * Get a JWT via given credentials.
@@ -94,14 +101,20 @@ class LoginController extends Controller
         $credentials =$request->only('email','password');
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'successful' => '1',
+                'status' => '02',
+                'error' => 'Unauthorized'
+            ], 401);
         }
 
         return response()->json([
+            'successful' => '1',
+            'status' => '01',
             'access_token' => $token,
             'user' => auth()->user(),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
-        ]);;
+        ],200);
     }
 }
