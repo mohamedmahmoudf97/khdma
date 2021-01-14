@@ -15,17 +15,12 @@
                       <h2 class="text-dark mb-4">Login</h2>
                     </div>
 
-                    <!-- Error Message -->
-                    <!-- Start Error -->
-                    <div
-                      v-if="iferror"
-                      class="p-2 mb-3 bg-danger text-white text-center h5 rounded "
+                    <form
+                      class="user"
+                      action="#"
+                      id="login"
+                      @submit.prevent="submit"
                     >
-                      Some thing is warning
-                    </div>
-                    <!-- End Error -->
-
-                    <form class="user" action="#" @submit.prevent="login">
                       <div class="form-group">
                         <input
                           v-model="form.email"
@@ -55,9 +50,6 @@
                             class="custom-control-input"
                             id="customCheck"
                           />
-                          <label class="custom-control-label" for="customCheck"
-                            >Remember Me</label
-                          >
                         </div>
                       </div>
 
@@ -76,40 +68,47 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-
+import { mapActions } from "vuex";
+// import axios from "axios"
 export default {
   name: "Login",
   data() {
     return {
+      // allerros: [],
+      // success : false,
       form: {
         email: "",
         password: ""
-      },
-      iferror: false
+      }
     };
   },
   methods: {
-    async login() {
-      let that = this;
-
-      const response = await axios
-        .post("http://localhost:8000/api/login-user", this.form)
-        .then(function() {
-          // if true
-          that.$emit("loginOn", true); // if login correct
+    ...mapActions({
+      login: "auth/login"
+    }),
+    submit() {
+      this.login(this.form)
+        .then(() => {
+          this.$router.replace({ name: "Dashboard" });
         })
-        .catch(error => {
-          // 401 if (Email Or password) is error get from laravel
-          console.log(error, "catch");
-          that.iferror = true;
-        })
-        .finally(() => {
-          console.log("finally");
-        });
-
-      console.log(response);
+        .catch(() => {});
     }
+    // check(){
+    //   axios.post("login-user", this.form)
+    //       .then((response) => {
+    //         console.log(response)
+    //         this.allerros = [];
+    //         this.form.email = '';
+    //         this.form.password = '';
+    //         this.success = true;
+    //       })
+    //       .catch((error) => {
+    //         this.allerros = error.response.data.errors;
+    //         // this.allerjros = error.response;
+    //         console.log(this.allerros)
+    //         this.success = false;
+    //       })
+    // }
   }
 };
 </script>

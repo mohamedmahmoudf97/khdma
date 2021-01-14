@@ -1,7 +1,6 @@
 <template>
   <div>
     Dashboard
-    <router-view />
   </div>
 </template>
 <script>

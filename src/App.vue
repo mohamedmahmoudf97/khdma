@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <div v-if="isLogin">
+    <div v-if="authenticated">
       <!--  this component will show after login -->
-      <Dashboard />
       <!-- Page Wrapper -->
       <div id="wrapper">
         <Sidebar />
@@ -19,7 +18,7 @@
 
     <div v-else>
       <!--  this component will show before login -->
-      <Login @loginOn="loginOn" />
+      <Login />
     </div>
   </div>
 </template>
@@ -29,26 +28,23 @@ require("jquery/src/jquery");
 require("bootstrap/dist/js/bootstrap.bundle.min");
 require("@fortawesome/fontawesome-free/css/all.min.css");
 
+import { mapGetters } from "vuex";
+
 import Sidebar from "@/components/layouts/Sidebar.vue";
 import Navbar from "@/components/layouts/Navbar.vue";
 import Login from "@/components/Login/Login.vue";
 
 export default {
-  data() {
-    return {
-      isLogin: false,
-      iferror: false
-    };
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user"
+    })
   },
   components: {
     Sidebar,
     Navbar,
     Login
-  },
-  methods: {
-    loginOn() {
-      this.isLogin = true;
-    }
   }
 };
 </script>

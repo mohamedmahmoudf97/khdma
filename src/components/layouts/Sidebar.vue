@@ -18,13 +18,20 @@
     <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item">
       <router-link to="/" class="nav-link">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span>
       </router-link>
     </li>
 
+    <hr class="sidebar-divider" />
+
+    <li class="nav-item">
+      <router-link class="nav-link" to="AddOrder">
+        <i class="fas fa-plus-circle fa-sm"></i> Add Order
+      </router-link>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider" />
 
@@ -161,3 +168,10 @@ export default {
   name: "Sidebar"
 };
 </script>
+
+<style scoped>
+.nav-item .router-link-exact-active {
+  background: #b11f3f;
+  color: #fff !important;
+}
+</style>

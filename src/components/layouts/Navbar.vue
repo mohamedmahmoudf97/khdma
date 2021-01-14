@@ -146,16 +146,16 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-            >User name</span
-          >
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
+            user.user.name
+          }}</span>
         </a>
         <!-- Dropdown - User Information -->
         <div
           class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
           aria-labelledby="userDropdown"
         >
-          <a class="dropdown-item" href="login.html">
+          <a class="dropdown-item" href="#" @click.prevent="logOut">
             <i class="fas fa-power-off  fa-fw mr-2 text-gray-700"></i>
             Logout
           </a>
@@ -165,7 +165,27 @@
   </nav>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user"
+    })
+  },
+  methods: {
+    ...mapActions({
+      logOutAction: "auth/logOut"
+    }),
+
+    logOut() {
+      this.logOutAction().then(() => {
+        // this.$router.replace({
+        //   // name: ""
+        // })
+      });
+    }
+  }
 };
 </script>
