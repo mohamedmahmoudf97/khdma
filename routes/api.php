@@ -33,3 +33,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('add-user', 'RegisterController@RegisterNewUser');
 Route::post('login-user', 'LoginController@login_user');
 Route::post('get-user', 'LoginController@getUser');
+Route::post('add-role', 'RoleController@add_role');
