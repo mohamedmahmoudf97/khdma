@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 import NotFound from "../views/NotFound.vue";
 import Dashboard from "@/components/Dashboard/Dashboard.vue";
 import AddOrder from "../components/Orders/AddOrder";
-// import Login from "../components/Login/Login";
+import AddUser from "../components/User/AddUser.vue";
 
 Vue.use(VueRouter);
 
@@ -23,6 +23,8 @@ const routes = [
     // }
   },
   // { path: "/Login", name: "Login", component: Login },
+
+  { path: "/AddUser", name: "AddUser", component: AddUser },
 
   { path: "/AddOrder", name: "AddOrder", component: AddOrder },
 

@@ -32,7 +32,15 @@
         <i class="fas fa-plus-circle fa-sm"></i> Add Order
       </router-link>
     </li>
-    <!-- Divider -->
+
+    <hr class="sidebar-divider" />
+
+    <li class="nav-item">
+      <router-link class="nav-link" to="AddUser">
+        <i class="fas fa-user-plus"></i> Add User
+      </router-link>
+    </li>
+
     <hr class="sidebar-divider" />
 
     <!-- Nav Item - Pages Collapse Menu -->

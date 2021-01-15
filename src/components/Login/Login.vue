@@ -104,7 +104,7 @@ export default {
     //       })
     //       .catch((error) => {
     //         this.allerros = error.response.data.errors;
-    //         // this.allerjros = error.response;
+    //         // this.allerros = error.response;
     //         console.log(this.allerros)
     //         this.success = false;
     //       })
