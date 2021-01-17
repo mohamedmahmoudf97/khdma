@@ -146,9 +146,15 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-            user.user.name
-          }}</span>
+          <span
+            v-if="user.user.name"
+            class="mr-2 d-none d-lg-inline text-gray-600 small"
+          >
+            {{ user.user.name }}
+          </span>
+          <span v-else class="mr-2 d-none d-lg-inline text-gray-600 small">
+            <i class="fas fa-caret-down"></i>
+          </span>
         </a>
         <!-- Dropdown - User Information -->
         <div
