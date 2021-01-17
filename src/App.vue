@@ -27,13 +27,11 @@
 require("jquery/src/jquery");
 require("bootstrap/dist/js/bootstrap.bundle.min");
 require("@fortawesome/fontawesome-free/css/all.min.css");
-
 import { mapGetters } from "vuex";
 
 import Sidebar from "@/components/layouts/Sidebar.vue";
 import Navbar from "@/components/layouts/Navbar.vue";
 import Login from "@/components/Login/Login.vue";
-
 export default {
   computed: {
     ...mapGetters({

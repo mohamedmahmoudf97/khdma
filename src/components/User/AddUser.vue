@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-bottom-danger mr-2 ml-2">
+  <div class="card border-bottom-danger mr-2 ml-2 shadow-lg">
     <div class="card-header py-3">
       <h5 class="m-0 font-weight-bold">
         <i class="fas fa-user-plus"></i> Add New User
@@ -100,22 +100,31 @@
           </div>
         </div>
 
-        <button class="btn btn-danger">
-          <i class="fas fa-user-plus"></i> Add User
-        </button>
+        <div class="col-12 align-content-center">
+          <button class="btn btn-danger d-block m-auto font-weight-bold">
+            <i class="fas fa-user-plus"></i> Add User
+          </button>
+        </div>
       </form>
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
+
 export default {
   name: "AddUser",
   data() {
     return {
       allerros: [],
       success: false,
-      roles: [{ id: 1, name: "Admin" }],
+      roles: [
+        { id: 1, name: "Admin" },
+        { id: 2, name: "Customer Service Admin" },
+        { id: 3, name: "Customer Service Editor" },
+        { id: 4, name: "Operation Admin" },
+        { id: 5, name: "Operation Editor" }
+      ],
       form: {
         fname: "",
         lname: "",
