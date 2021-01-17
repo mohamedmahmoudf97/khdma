@@ -12,7 +12,6 @@ Vue.component(AlertErrors.name, AlertErrors);
 Vue.component(AlertSuccess.name, AlertSuccess);
 
 require("@/store/subscriber");
-
 axios.defaults.baseURL = "http://localhost:8000/api";
 
 Vue.config.productionTip = false;

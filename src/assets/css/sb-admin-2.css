@@ -10031,13 +10031,18 @@ a:focus {
 }
 
 .border-left-danger {
-  border-left: 0.25rem solid #e74a3b !important;
+  border-left: 0.25rem solid #b11f3f !important;
 }
 
 .border-bottom-danger {
-  border-bottom: 0.25rem solid #e74a3b !important;
+  border-bottom: 0.25rem solid #b11f3f !important;
 }
-
+.border-right-danger {
+  border-right: 0.25rem solid #b11f3f !important;
+}
+.border-top-danger {
+  border-top: 0.25rem solid #b11f3f !important;
+}
 .border-left-light {
   border-left: 0.25rem solid #f8f9fc !important;
 }
