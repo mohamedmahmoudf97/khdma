@@ -6,12 +6,23 @@
       </h5>
     </div>
 
-    <div class="card-body"></div>
+    <div class="card-body">
+      <AddUnits />
+      <hr />
+      <AddProject />
+    </div>
   </div>
 </template>
 <script>
+import AddUnits from "./forms/AddUnits";
+import AddProject from "./forms/AddProject";
+
 export default {
-  name: "AddProjectAndUnits"
+  name: "AddProjectAndUnits",
+  components: {
+    AddProject,
+    AddUnits
+  }
 };
 </script>
 
