@@ -34,3 +34,6 @@ Route::post('add-user', 'RegisterController@RegisterNewUser');
 Route::post('login-user', 'LoginController@login_user');
 Route::post('get-user', 'LoginController@getUser');
 Route::post('add-role', 'RoleController@add_role');
+Route::post('add-order-cs','OrderController@add_new_order_customer_service');
+Route::post('add-project','ProjectController@add_project');
+Route::post('add-unit','UnitController@add_unit');

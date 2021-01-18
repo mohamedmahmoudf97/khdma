@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Unit extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
-    public function user()
+    protected $fillable  = ['name', 'project_id'];
+    public function project()
     {
-        return $this->hasOne(User::class,'role_id');
+        return $this->belongsTo(project::class);
     }
 }
