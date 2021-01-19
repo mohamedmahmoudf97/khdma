@@ -43,6 +43,14 @@
 
     <hr class="sidebar-divider" />
 
+    <li class="nav-item">
+      <router-link class="nav-link" to="AddService">
+        <i class="fas fa-concierge-bell"></i> Add Service
+      </router-link>
+    </li>
+
+    <hr class="sidebar-divider" />
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
       <a

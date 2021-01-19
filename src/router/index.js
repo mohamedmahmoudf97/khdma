@@ -5,8 +5,10 @@ import VueRouter from "vue-router";
 import NotFound from "../views/NotFound.vue";
 import Dashboard from "@/components/Dashboard/Dashboard.vue";
 import AddOrder from "@/components/Orders/AddOrder";
+import AddService from "../components/addService/addService";
 import AddUser from "@/components/User/AddUser.vue";
 import AddProjectAndUnits from "../components/ProjectsAndunits/AddProjectAndUnits";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -15,6 +17,7 @@ const routes = [
   { path: "/AddUser", name: "AddUser", component: AddUser },
 
   { path: "/AddOrder", name: "AddOrder", component: AddOrder },
+  { path: "/AddService", name: "AddService", component: AddService },
 
   {
     path: "/AddProjectAndUnits",
