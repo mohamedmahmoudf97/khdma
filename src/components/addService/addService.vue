@@ -1,6 +1,6 @@
 <template>
   <div id="AddService" class="card-body card mx-3">
-    <h2>Add Project</h2>
+    <h2>Add Service</h2>
 
     <form>
       <div class="mb-3">
