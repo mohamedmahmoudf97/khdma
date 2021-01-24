@@ -15,9 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('project');
-            $table->string('unit');
-            $table->string('service');
+            $table->integer('project_id')->index()->unsigned();
+            $table->integer('unit_id')->index()->unsigned();
+            $table->integer('service_id')->index()->unsigned();
+            $table->dateTime('target_date');
+            $table->dateTime('time_from');
+            $table->dateTime('time_to');
             $table->text('description');
             $table->timestamps();
         });
