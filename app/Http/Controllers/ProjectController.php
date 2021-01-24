@@ -39,4 +39,31 @@ class ProjectController extends Controller
         }
         
     }
+    public function get_projects()
+    {
+        if (auth()->user()) {
+            $projects = Project::all();
+            if ($projects) {
+                return response()->json([
+                    'successful' => '1',
+                    'status' => '01',
+                    'message' => 'All projects',
+                    'user' => auth()->user(),
+                    'projects' => $projects
+                ],200);
+            }else{
+                return response()->json([
+                    'successful' => '0',
+                    'status' => '02',
+                    'error' => 'could not Handel Your Request'
+                ], 500);
+            }
+        }else {
+            return response()->json([
+                'successful' => '1',
+                'status' => '02',
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+    }
 }

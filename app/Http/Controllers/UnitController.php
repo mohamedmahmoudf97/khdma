@@ -39,4 +39,43 @@ class UnitController extends Controller
             ], 401);
         }
     }
+    
+
+
+    public function get_units(Request $request)
+    {
+        if (auth()->user()) {
+            $this->validate($request, [
+                'project_id'=>'required|numeric'
+            ]);
+            $project = Project::findOrFail($request->project_id);
+            if ($project) {
+                return response()->json([
+                    'successful' => '1',
+                    'status' => '01',
+                    'message' => 'all Units for project ',
+                    'user' => auth()->user(),
+                    'project' => $project,
+                    'units' => $project->units
+                ],200);
+            }else{
+                return response()->json([
+                    'successful' => '0',
+                    'status' => '02',
+                    'error' => 'could handel Your Request, please try again'
+                ], 500);
+            }
+        }else {
+            return response()->json([
+                'successful' => '1',
+                'status' => '02',
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+    }
 }
+
+
+
+
+
