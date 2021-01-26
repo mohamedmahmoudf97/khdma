@@ -43,6 +43,14 @@
 
     <hr class="sidebar-divider" />
 
+    <li class="nav-item">
+      <router-link class="nav-link" to="AddProjectAndUnits">
+        <i class="fas fa-house-user fa-sm"></i> Add Projects And Units
+      </router-link>
+    </li>
+
+    <hr class="sidebar-divider" />
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
       <a
