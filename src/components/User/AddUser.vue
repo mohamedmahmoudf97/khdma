@@ -7,6 +7,15 @@
     </div>
 
     <div class="card-body">
+      <!--  the error message  -->
+      <p
+        class="text-danger m-0 text-center font-weight-bold"
+        v-for="err in allerros"
+        :key="err.index"
+      >
+        {{ err[0] }}
+      </p>
+
       <p class="text-success text-center font-weight-bold" v-if="success">
         User Added Successfully
       </p>

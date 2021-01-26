@@ -47,6 +47,9 @@
       <router-link class="nav-link" to="AddProjectAndUnits">
         <i class="fas fa-house-user fa-sm"></i> Add Projects And Units
       </router-link>
+      <router-link class="nav-link" to="AddService">
+        <i class="fas fa-concierge-bell"></i> Add Service
+      </router-link>
     </li>
 
     <hr class="sidebar-divider" />
