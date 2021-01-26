@@ -13,6 +13,12 @@
                   <div class="pt-5 pb-5">
                     <div class="text-center">
                       <h2 class="text-dark mb-4">Login</h2>
+                      <p
+                        class="text-danger m-0 font-weight-bold"
+                        v-if="allerros.error"
+                      >
+                        {{ allerros.error }}
+                      </p>
                     </div>
 
                     <form
@@ -29,7 +35,14 @@
                           id="email"
                           placeholder="Enter Email Address..."
                           class="form-control"
+                          :class="allerros.email ? 'border-danger' : ''"
                         />
+                        <span
+                          class="text-danger m-0 font-weight-bold"
+                          v-if="allerros.email"
+                        >
+                          {{ allerros.email[0] }}
+                        </span>
                       </div>
 
                       <div class="form-group">
@@ -40,7 +53,14 @@
                           class="form-control"
                           id="exampleInputPassword"
                           placeholder="Password"
+                          :class="allerros.password ? 'border-danger' : ''"
                         />
+                        <span
+                          class="text-danger m-0 font-weight-bold"
+                          v-if="allerros.password"
+                        >
+                          {{ allerros.password[0] }}
+                        </span>
                       </div>
 
                       <div class="form-group">
@@ -69,13 +89,12 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-// import axios from "axios"
+import axios from "axios";
 export default {
   name: "Login",
   data() {
     return {
-      // allerros: [],
-      // success : false,
+      allerros: [{ email: [] }, { password: [] }, { error: [] }],
       form: {
         email: "",
         password: ""
@@ -87,28 +106,20 @@ export default {
       login: "auth/login"
     }),
     submit() {
-      this.login(this.form)
+      axios
+        .post("login-user", this.form)
         .then(() => {
-          this.$router.replace({ name: "Dashboard" });
+          this.login(this.form);
+          // this.$router.replace({ name: "Dashboard" });
         })
-        .catch(() => {});
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.allerros = error.response.data.errors;
+          } else {
+            this.allerros = error.response.data;
+          }
+        });
     }
-    // check(){
-    //   axios.post("login-user", this.form)
-    //       .then((response) => {
-    //         console.log(response)
-    //         this.allerros = [];
-    //         this.form.email = '';
-    //         this.form.password = '';
-    //         this.success = true;
-    //       })
-    //       .catch((error) => {
-    //         this.allerros = error.response.data.errors;
-    //         // this.allerros = error.response;
-    //         console.log(this.allerros)
-    //         this.success = false;
-    //       })
-    // }
   }
 };
 </script>

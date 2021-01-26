@@ -1859,7 +1859,9 @@ pre code {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
 }
-
+.form-control.border-danger:focus{
+  box-shadow: 0 0 0 0.2rem rgba(177, 31, 63, 0.25);
+}
 .form-control::-webkit-input-placeholder {
   color: #858796;
   opacity: 1;
@@ -6510,7 +6512,7 @@ button.bg-dark:focus {
 }
 
 .border-danger {
-  border-color: #e74a3b !important;
+  border-color: #b11f3f !important;
 }
 
 .border-light {

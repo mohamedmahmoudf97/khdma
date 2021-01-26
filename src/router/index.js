@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "@/store";
+import store from "@/store";
 
 import NotFound from "../views/NotFound.vue";
 import Dashboard from "@/components/Dashboard/Dashboard.vue";
@@ -28,5 +28,9 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+router.beforeEach((to, from, next) => {
+  store.dispatch("auth/attempt", localStorage.getItem("access_token"));
+  next();
 });
 export default router;

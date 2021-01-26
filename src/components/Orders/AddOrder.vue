@@ -7,185 +7,142 @@
     </div>
 
     <div class="card-body">
-      <div class="add-header-btns d-flex pt-2 pb-2">
-        <div
-          @click="switchOrder('Add_Maintenance')"
-          class="text-white text-center font-weight-bold py-2 w-50 h6 m-0"
-          :class="Add_Maintenance ? 'bg-danger' : 'bg-dark'"
-        >
-          <i class="fas fa-fw fa-tools"></i> Add Maintenance
+      <form class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font-weight-bold" for="project">Projects</label>
+            <select
+              class="form-control"
+              id="project"
+              v-model="form.project"
+              @change="getUnits($event)"
+            >
+              <option value="">Choose Project</option>
+
+              <option
+                v-for="project in projects"
+                :key="project.id"
+                :value="project.id"
+              >
+                {{ project.name }}
+              </option>
+            </select>
+          </div>
         </div>
 
-        <div
-          @click="switchOrder('Add_Previews')"
-          class="text-white text-center font-weight-bold py-2 w-50 h6 m-0"
-          :class="Add_Maintenance ? 'bg-dark' : 'bg-danger'"
-        >
-          <i class="fas fa-fw fa-street-view"></i> Add Previews
-        </div>
-      </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font-weight-bold" for="unit">Units</label>
+            <select class="form-control" id="unit" v-model="form.unit">
+              <option value="">Choose Unit</option>
 
-      <div class="pt-2">
-        <div :class="Add_Maintenance ? 'd-block' : 'd-none'">
-          <h5 class="font-weight-bold text-center">
-            <i class="fas fa-fw fa-tools"></i> Add Maintenance
-          </h5>
-
-          <form class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold" for="project">Project</label>
-                <select
-                  @change="getUnits"
-                  class="form-control selectpicker"
-                  v-model="addMaintenanceForm.project"
-                  id="project"
-                >
-                  <option value="">Choose Project..</option>
-                  <option
-                    v-for="project in projects"
-                    :key="project.id"
-                    :value="project.id"
-                    >{{ project.name }}</option
-                  >
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold" for="unit">Unit</label>
-                <select
-                  class="form-control"
-                  v-model="addMaintenanceForm.unit"
-                  id="unit"
-                >
-                  <option value="">Choose Unit..</option>
-                  <option v-for="unit in units" :key="unit.id" :value="unit.id">
-                    {{ unit.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="font-weight-bold" for="maintenance"
-                  >Maintenance</label
-                >
-                <select
-                  class="form-control"
-                  id="maintenance"
-                  v-model="addMaintenanceForm.maintenance"
-                >
-                  <option value="">Choose Maintenance..</option>
-                  <option
-                    v-for="maintenance in maintenance"
-                    :key="maintenance.id"
-                    :value="maintenance.id"
-                  >
-                    {{ maintenance.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="font-weight-bold" for="targer_date"
-                  >Target Date</label
-                >
-                <input
-                  class="form-control"
-                  type="date"
-                  id="targer_date"
-                  v-model="addMaintenanceForm.targetDate"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="form-group">
-                <label class="font-weight-bold" for="target_time_from"
-                  >Time From</label
-                >
-                <input
-                  class="form-control"
-                  type="time"
-                  id="target_time_from"
-                  v-model="addMaintenanceForm.timeFrom"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="form-group">
-                <label class="font-weight-bold" for="target_time_to"
-                  >Time To</label
-                >
-                <input
-                  class="form-control"
-                  type="time"
-                  id="target_time_to"
-                  v-model="addMaintenanceForm.timeTo"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="cusmuer_desc"
-                  >Custumer Description Order</label
-                >
-                <textarea
-                  placeholder="Custumer Description Order"
-                  class="form-control"
-                  id="cusmuer_desc"
-                  v-model="addMaintenanceForm.customerDesc"
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="col-12 align-content-center">
-              <button class="btn btn-danger d-block m-auto font-weight-bold">
-                <i class="fas fa-tools"></i> Add Maintenance Order
-              </button>
-            </div>
-          </form>
+              <option v-for="unit in units" :key="unit.id" :value="unit.id">
+                {{ unit.name }}
+              </option>
+            </select>
+          </div>
         </div>
 
-        <div :class="Add_Maintenance ? 'd-none' : 'd-block'">
-          <h5 class="font-weight-bold text-center">
-            <i class="fas fa-fw fa-street-view"></i> Add Previews
-          </h5>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font-weight-bold" for="kind">Order Kind</label>
+            <select class="form-control" id="kind" v-model="form.kind">
+              <option value="">Choose Kind</option>
+              <option v-for="kind in kinds" :key="kind.id" :value="kind.id">
+                {{ kind.name }}
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font-weight-bold" for="service">Select Service</label>
+            <select
+              class="form-control"
+              id="service"
+              v-model="form.maintenance"
+            >
+              <option value="">Choose Service</option>
+              <option
+                v-for="service in services"
+                :key="service.id"
+                :value="service.id"
+              >
+                {{ service.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font-weight-bold" for="targer_date"
+              >Target Date</label
+            >
+            <input class="form-control" type="date" id="targer_date" />
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="font-weight-bold" for="target_time_from"
+              >Time From</label
+            >
+            <input
+              class="form-control"
+              type="time"
+              id="target_time_from"
+              v-model="form.timeFrom"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="font-weight-bold" for="target_time_to">Time To</label>
+            <input class="form-control" type="time" id="target_time_to" />
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="font-weight-bold" for="cusmuer_desc"
+              >Custumer Description Order</label
+            >
+            <textarea
+              placeholder="Custumer Description Order"
+              class="form-control"
+              id="cusmuer_desc"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="col-12 align-content-center">
+          <button class="btn btn-danger d-block m-auto font-weight-bold">
+            <i class="fas fa-plus-circle"></i> Add Order
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "AddOrder",
   data() {
     return {
-      Add_Maintenance: true,
       allerros: [],
       success: false,
-      projects: [
-        { id: 1, name: "Palm" },
-        { id: 2, name: "Palm Vally" }
+      projects: [],
+      units: [],
+      services: [],
+      kinds: [
+        { id: 1, name: "Maintenance" },
+        { id: 2, name: "Previews" }
       ],
-      units: [
-        { id: 1, projectId: 1, name: "1" },
-        { id: 2, projectId: 1, name: "1/1" },
-        { id: 3, projectId: 1, name: "1/2 G" },
-        { id: 4, projectId: 1, name: "1/2 F" },
-        { id: 5, projectId: 2, name: "2" },
-        { id: 6, projectId: 2, name: "2/1" },
-        { id: 7, projectId: 2, name: "2/2 G" },
-        { id: 8, projectId: 2, name: "50/2" }
-      ],
-      maintenance: [
+      maintenances: [
         { id: 1, name: "Plumper" },
         { id: 2, name: "Electrician" },
         { id: 3, name: "Carpenter" },
@@ -195,28 +152,46 @@ export default {
         { id: 7, name: "Air Conditioning" },
         { id: 8, name: "Other" }
       ],
-      addMaintenanceForm: {
+      Previews: [
+        { id: 1, name: "Car Wash" },
+        { id: 2, name: "News Paper" },
+        { id: 3, name: "House Keeping" },
+        { id: 4, name: "Planting & gardens" },
+        { id: 5, name: "Carry Remnants" },
+        { id: 6, name: "Others" }
+      ],
+      form: {
         project: "",
         unit: "",
         maintenance: "",
         targetDate: "",
         timeFrom: "",
         timeTo: "",
-        customerDesc: ""
+        customerDesc: "",
+        kind: ""
       }
     };
   },
+  async mounted() {
+    // get projects
+    await axios.post("get-projects").then(response => {
+      this.projects = response.data.projects;
+    });
+    //  get services
+    await axios.post("get-services").then(response => {
+      this.services = response.data.services;
+    });
+  },
   methods: {
-    switchOrder(status) {
-      if (status === "Add_Maintenance") {
-        this.Add_Maintenance = true;
+    async getUnits(event) {
+      const projectId = { project_id: event.target.value };
+      if (projectId.project_id != "") {
+        await axios.post("get-units", projectId).then(response => {
+          this.units = response.data.units;
+        });
       } else {
-        this.Add_Maintenance = false;
+        this.units = [];
       }
-    },
-    getUnits() {
-      const units = this.units;
-      console.log(units);
     }
   }
 };

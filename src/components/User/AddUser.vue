@@ -7,14 +7,6 @@
     </div>
 
     <div class="card-body">
-      <p
-        class="text-danger m-0 text-center font-weight-bold"
-        v-for="err in allerros"
-        :key="err.index"
-      >
-        {{ err[0] }}
-      </p>
-
       <p class="text-success text-center font-weight-bold" v-if="success">
         User Added Successfully
       </p>
@@ -29,7 +21,11 @@
               type="text"
               v-model="form.fname"
               placeholder="Frist Name"
+              :class="allerros.fname ? 'border-danger' : ''"
             />
+            <p class="text-danger m-0 font-weight-bold" v-if="allerros.fname">
+              {{ allerros.fname[0] }}
+            </p>
           </div>
         </div>
 
@@ -42,7 +38,11 @@
               type="text"
               v-model="form.lname"
               placeholder="Last Name"
+              :class="allerros.lname ? 'border-danger' : ''"
             />
+            <p class="text-danger m-0 font-weight-bold" v-if="allerros.lname">
+              {{ allerros.lname[0] }}
+            </p>
           </div>
         </div>
 
@@ -55,19 +55,31 @@
               type="email"
               v-model="form.email"
               placeholder="Email"
+              :class="allerros.email ? 'border-danger' : ''"
             />
+            <p class="text-danger m-0 font-weight-bold" v-if="allerros.email">
+              {{ allerros.email[0] }}
+            </p>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label for="role" class="font-weight-bold">Role</label>
-            <select class="form-control" id="role" v-model="form.role_id">
+            <select
+              class="form-control"
+              id="role"
+              v-model="form.role_id"
+              :class="allerros.role_id ? 'border-danger' : ''"
+            >
               <option value="">Choose Role</option>
               <option v-for="role in roles" :key="role.id" :value="role.id">{{
                 role.name
               }}</option>
             </select>
+            <p class="text-danger m-0 font-weight-bold" v-if="allerros.role_id">
+              {{ allerros.role_id[0] }}
+            </p>
           </div>
         </div>
 
@@ -80,7 +92,14 @@
               type="password"
               v-model="form.password"
               placeholder="Password"
+              :class="allerros.password ? 'border-danger' : ''"
             />
+            <p
+              class="text-danger m-0 font-weight-bold"
+              v-if="allerros.password"
+            >
+              {{ allerros.password[0] }}
+            </p>
           </div>
         </div>
 
@@ -95,7 +114,14 @@
               type="password"
               v-model="form.password_confirmation"
               placeholder="Password Confirmation"
+              :class="allerros.password_confirmation ? 'border-danger' : ''"
             />
+            <p
+              class="text-danger m-0 font-weight-bold"
+              v-if="allerros.password_confirmation"
+            >
+              {{ allerros.password_confirmation[0] }}
+            </p>
           </div>
         </div>
 
@@ -110,20 +136,22 @@
 </template>
 <script>
 import axios from "axios";
+import store from "@/store";
 
 export default {
   name: "AddUser",
   data() {
     return {
-      allerros: [],
-      success: false,
-      roles: [
-        { id: 1, name: "Admin" },
-        { id: 2, name: "Customer Service Admin" },
-        { id: 3, name: "Customer Service Editor" },
-        { id: 4, name: "Operation Admin" },
-        { id: 5, name: "Operation Editor" }
+      allerros: [
+        { fname: [] },
+        { lname: [] },
+        { role_id: [] },
+        { email: [] },
+        { password: [] },
+        { password_confirmation: [] }
       ],
+      success: false,
+      roles: [],
       form: {
         fname: "",
         lname: "",
@@ -134,14 +162,19 @@ export default {
       }
     };
   },
+  async mounted() {
+    await axios.post("get-projects").then(response => {
+      this.roles = response.data.projects;
+    });
+  },
   methods: {
-    submit() {
-      axios
+    async submit() {
+      await axios
         .post("add-user", this.form)
         .then(() => {
+          store.dispatch("auth/attempt", localStorage.getItem("access_token"));
           this.allerros = [];
           this.success = true;
-
           this.form.fname = "";
           this.form.lname = "";
           this.form.role_id = "";
@@ -150,9 +183,11 @@ export default {
           this.form.password_confirmation = "";
         })
         .catch(error => {
-          this.allerros = error.response.data.errors;
-          this.success = false;
-          console.log(this.allerros);
+          store.dispatch("auth/attempt", localStorage.getItem("access_token"));
+          if (error.response.status == 422) {
+            this.allerros = error.response.data.errors;
+            this.success = false;
+          }
         });
     }
   }
