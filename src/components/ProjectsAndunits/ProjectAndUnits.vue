@@ -18,7 +18,7 @@ import AddUnits from "./forms/AddUnits";
 import AddProject from "./forms/AddProject";
 
 export default {
-  name: "AddProjectAndUnits",
+  name: "ProjectAndUnits",
   components: {
     AddProject,
     AddUnits
