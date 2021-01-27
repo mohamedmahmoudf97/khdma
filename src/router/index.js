@@ -7,7 +7,7 @@ import Dashboard from "@/components/Dashboard/Dashboard.vue";
 import AddOrder from "@/components/Orders/AddOrder";
 import AddService from "../components/addService/addService";
 import AddUser from "@/components/User/AddUser.vue";
-import AddProjectAndUnits from "../components/ProjectsAndunits/AddProjectAndUnits";
+import ProjectAndUnits from "@/components/ProjectsAndunits/ProjectAndUnits";
 
 Vue.use(VueRouter);
 
@@ -20,9 +20,9 @@ const routes = [
   { path: "/AddService", name: "AddService", component: AddService },
 
   {
-    path: "/AddProjectAndUnits",
-    name: "AddProjectAndUnits",
-    component: AddProjectAndUnits
+    path: "/ProjectAndUnits",
+    name: "ProjectAndUnits",
+    component: ProjectAndUnits
   },
 
   { path: "/:id", name: "NotFound", component: NotFound }

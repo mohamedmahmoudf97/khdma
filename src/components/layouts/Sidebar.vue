@@ -44,8 +44,8 @@
     <hr class="sidebar-divider" />
 
     <li class="nav-item">
-      <router-link class="nav-link" to="AddProjectAndUnits">
-        <i class="fas fa-house-user fa-sm"></i> Add Projects And Units
+      <router-link class="nav-link" to="ProjectAndUnits">
+        <i class="fas fa-house-user fa-sm"></i> Projects And Units
       </router-link>
       <router-link class="nav-link" to="AddService">
         <i class="fas fa-concierge-bell"></i> Add Service
@@ -191,6 +191,9 @@ export default {
 <style scoped>
 .nav-item .router-link-exact-active {
   background: #b11f3f;
+  color: #fff !important;
+}
+.nav-item .router-link-exact-active i {
   color: #fff !important;
 }
 </style>

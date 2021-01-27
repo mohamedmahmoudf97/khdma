@@ -1,50 +1,106 @@
 <template>
   <div id="addUnits">
-    <h2>Add Project</h2>
+    <h2 class="text-center font-weight-bold">Add Unit</h2>
 
-    <form>
-      <div class="mb-3">
-        <label for="unitName" class="form-label">Unit Name</label>
-        <input
-          required
-          id="unitName"
-          name="unitName"
-          class="form-control"
-          placeholder="Unit name..."
-          aria-describedby="unitName"
-        />
+    <p class="text-success text-center font-weight-bold" v-if="success">
+      Unit Added Successfully
+    </p>
+
+    <form class="row" @submit.prevent="addUnit">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Choose Project</label>
+          <select
+            class="form-control"
+            v-model="form.project_id"
+            :class="allerros.project_id ? 'border-danger' : ''"
+          >
+            <option value="">Select Project..</option>
+            <option
+              v-for="project in projects"
+              :value="project.id"
+              :key="project.id"
+            >
+              {{ project.name }}
+            </option>
+          </select>
+
+          <p
+            class="text-danger m-0 font-weight-bold"
+            v-if="allerros.project_id"
+          >
+            {{ allerros.project_id[0] }}
+          </p>
+        </div>
       </div>
 
-      <select
-        required
-        name="unitVal"
-        class="form-select d-block mb-3 col-12 p-2"
-        aria-label="Default select example"
-      >
-        <option v-for="unit in allUnits" :value="unit.value" :key="unit.value">
-          {{ unit.name }}
-        </option>
-      </select>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Unit Name</label>
+          <input
+            class="form-control"
+            placeholder="Unit Name.."
+            v-model="form.name"
+            :class="allerros.name ? 'border-danger' : ''"
+          />
 
-      <button type="submit" class="btn btn-primary col-12">Add</button>
+          <p class="text-danger m-0 font-weight-bold" v-if="allerros.name">
+            {{ allerros.name[0] }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-plus-circle"></i> Add Unit
+        </button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import store from "@/store";
+
 export default {
   name: "AddUnits",
   data() {
     return {
-      allUnits: [
-        { name: "Select place", value: 0 },
-        { name: "place1", value: 1 },
-        { name: "place2", value: 2 },
-        { name: "place3", value: 3 },
-        { name: "place4", value: 4 },
-        { name: "place5", value: 5 }
-      ]
+      allerros: [],
+      success: false,
+      projects: [],
+      form: {
+        project_id: "",
+        name: ""
+      }
     };
+  },
+  async mounted() {
+    // get projects
+    await axios.post("get-projects").then(response => {
+      this.projects = response.data.projects;
+    });
+  },
+  methods: {
+    async addUnit() {
+      await axios
+        .post("add-unit", this.form)
+        .then(() => {
+          store.dispatch("auth/attempt", localStorage.getItem("access_token"));
+          this.allerros = [];
+          this.success = true;
+          this.form.project_id = "";
+          this.form.name = "";
+        })
+        .catch(error => {
+          store.dispatch("auth/attempt", localStorage.getItem("access_token"));
+          if (error.response.status == 422) {
+            this.allerros = error.response.data.errors;
+            this.success = false;
+          }
+        });
+    }
   }
 };
 </script>
