@@ -43,3 +43,5 @@ Route::post('get-projects', 'ProjectController@get_projects');
 Route::post('get-units', 'UnitController@get_units');
 Route::post('get-orders','OrderController@get_orders');
 Route::post('get-order' , 'OrderController@get_order');
+Route::post('add-staff' , 'StaffController@add_unit');
+Route::post('add-order-op','OrderController@add_order_operation');
