@@ -15,19 +15,21 @@ class OrderController extends Controller
                 'project_id' => 'required',
                 'unit_id' => 'required',
                 'service_id' => 'required',
-                // 'target_date' => 'required',
-                // 'time_from' => 'required',
-                // 'time_to' => 'required',
+                'target_date' => 'required|date_format:m-d-Y',
+                'time_from' => 'required|date_format:H:i',
+                'time_to' =>  'required|date_format:H:i',
                 'description' => 'required',
+                'type' => 'required|in:preview,maintenance,other',
             ]);
             $order = new Order();
             $order->project_id = $request->project_id;
             $order->unit_id = $request->unit_id;
             $order->service_id = $request->service_id;
-            $order->target_date = Carbon::now();
-            $order->time_from = Carbon::now();
-            $order->time_to = Carbon::now();
+            $order->target_date = date("m-d-Y", strtotime($request->target_date)) ;
+            $order->time_from = $request->time_from;
+            $order->time_to = $request->time_to;
             $order->description = $request->description;
+            $order->type = $request->type;
             if ($order->save()) {
                 return response()->json([
                     'successful' => '1',
@@ -115,6 +117,37 @@ class OrderController extends Controller
             ], 401);
         }
     }
-
+    public function add_order_operation(Request $request)
+    {
+        if (auth()->user() && auth()->user()->role->name == 'customer service') {
+            $this->validate($request, [
+                'order_id' => 'required|numeric',
+                'staff_id' => 'required|numeric'
+                ]);
+                $order = Order::find($request->order_id);
+                $order->staff_id = $request->staff_id;
+                if ($order->update()) {
+                    return response()->json([
+                        'successful' => '1',
+                        'status' => '01',
+                        'message' => 'Order Has Been Created successfully',
+                        'order' => $order,
+                    ], 200);
+                }else {
+                    return response()->json([
+                        'successful' => '0',
+                        'status'  => '02',
+                        'error' => 'failed, please try again'
+                    ], 500);
+                }
+        }else {
+            return response()->json([
+                'successful' => '1',
+                'status' => '02',
+                'auth()->user()->role'=> auth()->user()->role,
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+    }
 
 }

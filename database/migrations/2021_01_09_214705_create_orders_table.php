@@ -18,10 +18,12 @@ class CreateOrdersTable extends Migration
             $table->integer('project_id')->index()->unsigned();
             $table->integer('unit_id')->index()->unsigned();
             $table->integer('service_id')->index()->unsigned();
-            $table->dateTime('target_date');
-            $table->dateTime('time_from');
-            $table->dateTime('time_to');
+            $table->integer('staff_id')->index()->unsigned()->nullable();
+            $table->date('target_date');
+            $table->time('time_from');
+            $table->time('time_to');
             $table->text('description');
+            $table->enum('type', ['preview', 'maintenance' , 'other']);
             $table->timestamps();
         });
     }
