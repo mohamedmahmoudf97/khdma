@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Staff extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
-    // public function staff()
-    // {
-    //     return $this->belongsToMany(Staff::class);
-    // }
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }
