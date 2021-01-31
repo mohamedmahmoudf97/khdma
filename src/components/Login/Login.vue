@@ -29,12 +29,12 @@
                     >
                       <div class="form-group">
                         <input
-                          v-model="form.email"
                           type="text"
                           name="email"
                           id="email"
                           placeholder="Enter Email Address..."
                           class="form-control"
+                          v-model="form.email"
                           :class="allerros.email ? 'border-danger' : ''"
                         />
                         <span
@@ -48,11 +48,11 @@
                       <div class="form-group">
                         <input
                           type="password"
-                          v-model="form.password"
                           name="password"
                           class="form-control"
                           id="exampleInputPassword"
                           placeholder="Password"
+                          v-model="form.password"
                           :class="allerros.password ? 'border-danger' : ''"
                         />
                         <span

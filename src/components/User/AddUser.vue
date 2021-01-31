@@ -2,7 +2,8 @@
   <div class="card border-bottom-danger mr-2 ml-2 shadow-lg">
     <div class="card-header py-3">
       <h5 class="m-0 font-weight-bold">
-        <i class="fas fa-user-plus"></i> Add New User
+        <i class="fas fa-user-plus"></i>
+        Add New User
       </h5>
     </div>
 
@@ -19,8 +20,8 @@
               class="form-control"
               id="fmane"
               type="text"
-              v-model="form.fname"
               placeholder="Frist Name"
+              v-model="form.fname"
               :class="allerros.fname ? 'border-danger' : ''"
             />
             <p class="text-danger m-0 font-weight-bold" v-if="allerros.fname">
@@ -36,8 +37,8 @@
               class="form-control"
               id="lmane"
               type="text"
-              v-model="form.lname"
               placeholder="Last Name"
+              v-model="form.lname"
               :class="allerros.lname ? 'border-danger' : ''"
             />
             <p class="text-danger m-0 font-weight-bold" v-if="allerros.lname">
@@ -53,8 +54,8 @@
               class="form-control"
               id="email"
               type="email"
-              v-model="form.email"
               placeholder="Email"
+              v-model="form.email"
               :class="allerros.email ? 'border-danger' : ''"
             />
             <p class="text-danger m-0 font-weight-bold" v-if="allerros.email">
@@ -90,8 +91,8 @@
               class="form-control"
               id="password"
               type="password"
-              v-model="form.password"
               placeholder="Password"
+              v-model="form.password"
               :class="allerros.password ? 'border-danger' : ''"
             />
             <p
@@ -112,8 +113,8 @@
               class="form-control"
               id="password_confirmation"
               type="password"
-              v-model="form.password_confirmation"
               placeholder="Password Confirmation"
+              v-model="form.password_confirmation"
               :class="allerros.password_confirmation ? 'border-danger' : ''"
             />
             <p

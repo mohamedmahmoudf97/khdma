@@ -18,41 +18,13 @@
     <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-      <router-link to="/" class="nav-link">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span>
+    <li class="nav-item" v-for="(link, inx) in links" :key="inx">
+      <router-link :to="link.to" class="nav-link">
+        <i :class="link.icon"></i>
+        <span>{{ link.name }}</span>
       </router-link>
+      <hr class="sidebar-divider mb-0" />
     </li>
-
-    <hr class="sidebar-divider" />
-
-    <li class="nav-item">
-      <router-link class="nav-link" to="AddOrder">
-        <i class="fas fa-plus-circle fa-sm"></i> Add Order
-      </router-link>
-    </li>
-
-    <hr class="sidebar-divider" />
-
-    <li class="nav-item">
-      <router-link class="nav-link" to="AddUser">
-        <i class="fas fa-user-plus"></i> Add User
-      </router-link>
-    </li>
-
-    <hr class="sidebar-divider" />
-
-    <li class="nav-item">
-      <router-link class="nav-link" to="ProjectAndUnits">
-        <i class="fas fa-house-user fa-sm"></i> Projects And Units
-      </router-link>
-      <router-link class="nav-link" to="AddService">
-        <i class="fas fa-concierge-bell"></i> Add Service
-      </router-link>
-    </li>
-
-    <hr class="sidebar-divider" />
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
@@ -75,43 +47,17 @@
         data-parent="#accordionSidebar"
       >
         <div class="bg-white collapse-inner">
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-network-wired"></i> All
-            <span class="counter">15</span></a
+          <a
+            v-for="(link, inx) in MaintenanceLinks"
+            :key="inx"
+            class="collapse-item"
+            :href="link.to"
           >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-faucet"></i> Plumber
-            <span class="counter">10</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-plug"></i> Electrician
-            <span class="counter done">0</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-hammer"></i> Carpenter
-            <span class="counter">1</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-paint-roller"></i> Painting
-            <span class="counter done">0</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-satellite-dish"></i> Satellite
-            <span class="counter done">0</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-screwdriver"></i> Aluminum
-            <span class="counter">1</span></a
-          >
-
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fas fa-fan"></i> Air Conditioning
-            <span class="counter">1</span></a
-          >
-          <a class="collapse-item" href="datatables.html"
-            ><i class="fab fa-ethereum"></i> Others
-            <span class="counter">2</span></a
-          >
+            <i :class="link.icon"></i> {{ link.name }}
+            <span class="counter" :class="link.done ? 'done' : ''">{{
+              link.value
+            }}</span>
+          </a>
         </div>
       </div>
     </li>
@@ -141,36 +87,16 @@
         data-parent="#accordionSidebar"
       >
         <div class="bg-white collapse-inner">
-          <a class="collapse-item" href=""
-            ><i class="fas fa-network-wired"></i> All
-            <span class="counter">15</span></a
+          <a
+            v-for="(link, idx) in PreviewsLinks"
+            :key="idx"
+            :href="link.to"
+            :class="link.done ? 'done' : ''"
+            class="collapse-item"
           >
-          <a class="collapse-item" href=""
-            ><i class="fas fa-car-alt"></i> Car Wash
-            <span class="counter">10</span></a
-          >
-          <a class="collapse-item" href=""
-            ><i class="far fa-newspaper"></i> Newspaper
-            <span class="counter done">0</span></a
-          >
-          <a class="collapse-item" href=""
-            ><i class="fas fa-house-user"></i> Housekeeping
-            <span class="counter">1</span></a
-          >
-          <a class="collapse-item" href=""
-            ><i class="fab fa-pagelines"></i> Planting & gardens<span
-              class="counter"
-              >3</span
-            ></a
-          >
-          <a class="collapse-item" href=""
-            ><i class="fas fa-people-carry"></i> Carry Remnants
-            <span class="counter done">0</span></a
-          >
-          <a class="collapse-item" href=""
-            ><i class="fab fa-ethereum"></i> Others
-            <span class="counter">2</span></a
-          >
+            <i class="link.icon"></i> {{ link.name }}
+            <span class="counter">{{ link.value }}</span>
+          </a>
         </div>
       </div>
     </li>
@@ -184,7 +110,148 @@
 
 <script>
 export default {
-  name: "Sidebar"
+  name: "Sidebar",
+  data() {
+    return {
+      links: [
+        { to: "/", icon: "fas fa-fw fa-tachometer-alt", name: "Dashboard" },
+        {
+          to: "/AddOrder",
+          icon: "fas fa-plus-circle fa-sm",
+          name: "Add Order"
+        },
+        { to: "/AddUser", icon: "fas fa-user-plus", name: "Add User" },
+        {
+          to: "/ProjectAndUnits",
+          icon: "fas fa-house-user fa-sm",
+          name: "Projects And Units"
+        },
+        {
+          to: "/AddService",
+          icon: "fas fa-concierge-bell",
+          name: "Add Service"
+        }
+      ],
+
+      MaintenanceLinks: [
+        {
+          to: "datatables.html",
+          done: true,
+          icon: "fas fa-network-wired",
+          name: "All",
+          value: 20
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fas fa-faucet",
+          name: "Plumber",
+          value: 10
+        },
+        {
+          to: "datatables.html",
+          done: true,
+          icon: "fas fa-plug",
+          name: "Electrician",
+          value: 0
+        },
+        {
+          to: "datatables.html",
+          done: true,
+          icon: "fas fa-hammer",
+          name: "Carpenter",
+          value: 10
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fas fa-paint-roller",
+          name: "Painting",
+          value: 12
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fas fa-satellite-dish",
+          name: "Satellite",
+          value: 14
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fas fa-screwdriver",
+          name: "Aluminum",
+          value: 24
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fas fa-fan",
+          name: "Air Conditioning",
+          value: 44
+        },
+        {
+          to: "datatables.html",
+          done: false,
+          icon: "fab fa-ethereum",
+          name: "Others",
+          value: 1
+        }
+      ],
+
+      PreviewsLinks: [
+        {
+          done: false,
+          to: "#",
+          icon: "fas fa-network-wired",
+          name: "All",
+          value: 15
+        },
+        {
+          done: false,
+          to: "#",
+          icon: "fas fa-car-alt",
+          name: "Car Wash",
+          value: 10
+        },
+        {
+          done: false,
+          to: "#",
+          icon: "far fa-newspaper",
+          name: "Newspaper",
+          value: 0
+        },
+        {
+          done: false,
+          to: "#",
+          icon: "far fa-house-user",
+          name: "Housekeeping",
+          value: 1
+        },
+        {
+          done: true,
+          to: "#",
+          icon: "far fa-pagelines",
+          name: "Planting & gardens",
+          value: 3
+        },
+        {
+          done: true,
+          to: "#",
+          icon: "far fa-people-carry",
+          name: "Carry Remnants",
+          value: 0
+        },
+        {
+          done: false,
+          to: "#",
+          icon: "far fa-ethereum",
+          name: "Others",
+          value: 2
+        }
+      ]
+    };
+  }
 };
 </script>
 

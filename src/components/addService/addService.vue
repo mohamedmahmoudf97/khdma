@@ -7,13 +7,13 @@
         <label for="AddService" class="form-label">Add Service</label>
         <input
           required
-          class="form-control"
+          class="form-control col-6 "
           id="AddService"
           placeholder="Service name..."
         />
       </div>
 
-      <button type="submit" class="btn btn-primary col-12">Add</button>
+      <button type="submit" class="btn col-6 red">Add</button>
     </form>
   </div>
 </template>
@@ -23,3 +23,10 @@ export default {
   name: "AddService"
 };
 </script>
+
+<style lang="scss" scoped>
+.red {
+  background: #b11f3f;
+  color: #eee;
+}
+</style>

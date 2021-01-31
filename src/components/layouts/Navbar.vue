@@ -147,10 +147,11 @@
           aria-expanded="false"
         >
           <span
-            v-if="user.user.name"
+            v-if="user.user.name || user.user.email"
             class="mr-2 d-none d-lg-inline text-gray-600 small"
           >
-            {{ user.user.name }}
+            {{ user.user.name ? user.user.name : user.user.email }}
+            <i class="fas fa-caret-down"></i>
           </span>
           <span v-else class="mr-2 d-none d-lg-inline text-gray-600 small">
             <i class="fas fa-caret-down"></i>
@@ -176,22 +177,13 @@ export default {
   name: "Navbar",
   computed: {
     ...mapGetters({
-      authenticated: "auth/authenticated",
       user: "auth/user"
     })
   },
   methods: {
     ...mapActions({
-      logOutAction: "auth/logOut"
-    }),
-
-    logOut() {
-      this.logOutAction().then(() => {
-        // this.$router.replace({
-        //   // name: ""
-        // })
-      });
-    }
+      logOut: "auth/logOut"
+    })
   }
 };
 </script>

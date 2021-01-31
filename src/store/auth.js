@@ -27,6 +27,7 @@ export default {
       let response = await axios.post("login-user", credentials);
       return dispatch("attempt", response.data.access_token);
     },
+
     async attempt({ commit, state }, access_token) {
       if (access_token) {
         commit("SET_TOKEN", access_token);
