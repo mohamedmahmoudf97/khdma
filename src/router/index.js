@@ -4,7 +4,7 @@ import store from "@/store";
 
 import NotFound from "../views/NotFound.vue";
 import Dashboard from "@/components/Dashboard/Dashboard.vue";
-import AddOrder from "@/components/Orders/AddOrder";
+import Order from "../components/Orders/Order";
 import AddService from "../components/addService/addService";
 import AddUser from "@/components/User/AddUser.vue";
 import ProjectAndUnits from "@/components/ProjectsAndunits/ProjectAndUnits";
@@ -16,7 +16,7 @@ const routes = [
 
   { path: "/AddUser", name: "AddUser", component: AddUser },
 
-  { path: "/AddOrder", name: "AddOrder", component: AddOrder },
+  { path: "/order", name: "Order", component: Order },
   { path: "/AddService", name: "AddService", component: AddService },
 
   {

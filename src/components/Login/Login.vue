@@ -1,88 +1,61 @@
 <template>
-  <div class="container-login">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-xl-10 col-lg-12 col-md-9">
-          <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-5">
-              <!-- Nested Row within Card Body -->
-              <div class="row">
-                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+  <div class="container login-page">
+    <div class="card rounded-lg shadow p-4 login-content">
+      <div class="card-body">
+        <form class="text-center" @submit.prevent="submit">
+          <h1>Login</h1>
+          <p>Sign In to your account</p>
 
-                <div class="col-lg-6">
-                  <div class="pt-5 pb-5">
-                    <div class="text-center">
-                      <h2 class="text-dark mb-4">Login</h2>
-                      <p
-                        class="text-danger m-0 font-weight-bold"
-                        v-if="allerros.error"
-                      >
-                        {{ allerros.error }}
-                      </p>
-                    </div>
+          <p class="text-danger" v-if="allerros.error">
+            {{ allerros.error }}
+          </p>
 
-                    <form
-                      class="user"
-                      action="#"
-                      id="login"
-                      @submit.prevent="submit"
-                    >
-                      <div class="form-group">
-                        <input
-                          v-model="form.email"
-                          type="text"
-                          name="email"
-                          id="email"
-                          placeholder="Enter Email Address..."
-                          class="form-control"
-                          :class="allerros.email ? 'border-danger' : ''"
-                        />
-                        <span
-                          class="text-danger m-0 font-weight-bold"
-                          v-if="allerros.email"
-                        >
-                          {{ allerros.email[0] }}
-                        </span>
-                      </div>
-
-                      <div class="form-group">
-                        <input
-                          type="password"
-                          v-model="form.password"
-                          name="password"
-                          class="form-control"
-                          id="exampleInputPassword"
-                          placeholder="Password"
-                          :class="allerros.password ? 'border-danger' : ''"
-                        />
-                        <span
-                          class="text-danger m-0 font-weight-bold"
-                          v-if="allerros.password"
-                        >
-                          {{ allerros.password[0] }}
-                        </span>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="customCheck"
-                          />
-                        </div>
-                      </div>
-
-                      <button class="btn btn-danger btn-user btn-block">
-                        Login
-                      </button>
-                    </form>
-                  </div>
-                </div>
+          <div role="group" class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fas fa-user"></i
+                ></span>
               </div>
+              <input
+                v-model="form.email"
+                type="text"
+                name="email"
+                id="email"
+                placeholder="Enter Email Address..."
+                class="form-control"
+                :class="allerros.email ? 'border-danger' : ''"
+              />
             </div>
+            <span class="text-danger" v-if="allerros.email">{{
+              allerros.email[0]
+            }}</span>
           </div>
-        </div>
+
+          <div role="group" class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fas fa-lock"></i
+                ></span>
+              </div>
+              <input
+                v-model="form.password"
+                type="password"
+                placeholder="Enter Password..."
+                class="form-control"
+                :class="allerros.email ? 'border-danger' : ''"
+              />
+            </div>
+            <span class="text-danger" v-if="allerros.password">{{
+              allerros.password[0]
+            }}</span>
+          </div>
+
+          <button class="btn btn-danger font-weight-bold" style="width: 110px">
+            <i class="fas fa-sign-in-alt mr-1"></i> Login
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -94,7 +67,7 @@ export default {
   name: "Login",
   data() {
     return {
-      allerros: [{ email: [] }, { password: [] }, { error: [] }],
+      allerros: [],
       form: {
         email: "",
         password: ""
@@ -113,14 +86,34 @@ export default {
           // this.$router.replace({ name: "Dashboard" });
         })
         .catch(error => {
-          if (error.response.status == 422) {
-            this.allerros = error.response.data.errors;
+          if (error.request.status != 0) {
+            if (error.response.status == 422) {
+              this.allerros = error.response.data.errors;
+            } else {
+              this.allerros = error.response.data;
+            }
           } else {
-            this.allerros = error.response.data;
+            this.allerros = { error: "check your internet connection" };
           }
         });
     }
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-control.border-danger:focus {
+  box-shadow: 0 0 0 0.2rem rgba(229, 83, 83, 0.25) !important;
+}
+.login-page {
+  min-height: 100vh;
+  position: relative;
+  .login-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 350px;
+    width: 450px;
+    transform: translate(-50%, -50%);
+  }
+}
+</style>

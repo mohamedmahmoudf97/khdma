@@ -3,14 +3,16 @@
     <div v-if="authenticated">
       <!--  this component will show after login -->
       <!-- Page Wrapper -->
-      <div id="wrapper">
+      <div class="c-app">
         <Sidebar />
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-          <!-- Main Content -->
-          <div id="content">
-            <Navbar />
-            <router-view />
+        <div class="c-wrapper">
+          <Navbar />
+          <!-- Content Wrapper -->
+          <div class="c-body">
+            <!-- Main Content -->
+            <main class="c-main">
+              <router-view />
+            </main>
           </div>
         </div>
       </div>
@@ -24,10 +26,7 @@
 </template>
 
 <script>
-require("jquery/src/jquery");
-require("bootstrap/dist/js/bootstrap.bundle.min");
 require("@fortawesome/fontawesome-free/css/all.min.css");
-// require('vue-search-select');
 
 import { mapGetters } from "vuex";
 
@@ -50,7 +49,8 @@ export default {
 };
 </script>
 
-<style scoped>
-@import "assets/css/sb-admin-2.css";
-@import "~vue-search-select/dist/VueSearchSelect.css";
+<style lang="scss" scoped>
+.form-control.border-danger:focus {
+  box-shadow: 0 0 0 0.2rem rgba(229, 83, 83, 0.25) !important;
+}
 </style>

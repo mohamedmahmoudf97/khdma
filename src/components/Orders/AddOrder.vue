@@ -1,134 +1,175 @@
 <template>
-  <div class="card border-bottom-danger mr-2 ml-2 shadow-lg">
-    <div class="card-header py-3">
-      <h5 class="m-0 font-weight-bold">
-        <i class="fas fa-plus-circle"></i> Add New Order
-      </h5>
-    </div>
+  <div class="card-body">
+    <p v-if="success" class="text-center text-success font-weight-bold">
+      Order has been added successfully
+    </p>
 
-    <div class="card-body">
-      <form class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="font-weight-bold" for="project">Projects</label>
-            <select
-              class="form-control"
-              id="project"
-              v-model="form.project"
-              @change="getUnits($event)"
+    <form class="row" @submit.prevent="addOrder">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font-weight-bold" for="project">Projects</label>
+          <select
+            class="form-control"
+            id="project"
+            v-model="form.project_id"
+            @change="getUnits($event)"
+            :class="allerros.project_id ? 'border-danger' : ''"
+          >
+            <option value="">Choose Project</option>
+            <option
+              v-for="project in projects"
+              :key="project.id"
+              :value="project.id"
             >
-              <option value="">Choose Project</option>
+              {{ project.name }}
+            </option>
+          </select>
 
-              <option
-                v-for="project in projects"
-                :key="project.id"
-                :value="project.id"
-              >
-                {{ project.name }}
-              </option>
-            </select>
-          </div>
+          <span class="text-danger" v-if="allerros.project_id">{{
+            allerros.project_id[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="font-weight-bold" for="unit">Units</label>
-            <select class="form-control" id="unit" v-model="form.unit">
-              <option value="">Choose Unit</option>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font-weight-bold" for="unit">Units</label>
+          <select
+            class="form-control"
+            id="unit"
+            v-model="form.unit_id"
+            :class="allerros.unit_id ? 'border-danger' : ''"
+          >
+            <option value="">Choose Unit</option>
 
-              <option v-for="unit in units" :key="unit.id" :value="unit.id">
-                {{ unit.name }}
-              </option>
-            </select>
-          </div>
+            <option v-for="unit in units" :key="unit.id" :value="unit.id">
+              {{ unit.name }}
+            </option>
+          </select>
+          <span class="text-danger" v-if="allerros.unit_id">{{
+            allerros.unit_id[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="font-weight-bold" for="kind">Order Kind</label>
-            <select class="form-control" id="kind" v-model="form.kind">
-              <option value="">Choose Kind</option>
-              <option v-for="kind in kinds" :key="kind.id" :value="kind.id">
-                {{ kind.name }}
-              </option>
-            </select>
-          </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font-weight-bold" for="kind">Order Type</label>
+          <select
+            class="form-control"
+            id="kind"
+            v-model="form.type"
+            :class="allerros.type ? 'border-danger' : ''"
+          >
+            <option value="">Choose Type</option>
+            <option v-for="kind in kinds" :key="kind.id" :value="kind.name">
+              {{ kind.name }}
+            </option>
+          </select>
+          <span class="text-danger" v-if="allerros.type">{{
+            allerros.type[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="font-weight-bold" for="service">Select Service</label>
-            <select
-              class="form-control"
-              id="service"
-              v-model="form.maintenance"
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font-weight-bold" for="service">Select Service</label>
+          <select
+            class="form-control"
+            id="service"
+            v-model="form.service_id"
+            :class="allerros.service_id ? 'border-danger' : ''"
+          >
+            <option value="">Choose Service</option>
+            <option
+              v-for="service in services"
+              :key="service.id"
+              :value="service.id"
             >
-              <option value="">Choose Service</option>
-              <option
-                v-for="service in services"
-                :key="service.id"
-                :value="service.id"
-              >
-                {{ service.name }}
-              </option>
-            </select>
-          </div>
+              {{ service.name }}
+            </option>
+          </select>
+          <span class="text-danger" v-if="allerros.service_id">{{
+            allerros.service_id[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="font-weight-bold" for="targer_date"
-              >Target Date</label
-            >
-            <input class="form-control" type="date" id="targer_date" />
-          </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font-weight-bold" for="targer_date">Target Date</label>
+          <input
+            v-model="form.target_date"
+            class="form-control"
+            type="date"
+            id="targer_date"
+            :class="allerros.target_date ? 'border-danger' : ''"
+          />
+          <span class="text-danger" v-if="allerros.target_date">{{
+            allerros.target_date[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-2">
-          <div class="form-group">
-            <label class="font-weight-bold" for="target_time_from"
-              >Time From</label
-            >
-            <input
-              class="form-control"
-              type="time"
-              id="target_time_from"
-              v-model="form.timeFrom"
-            />
-          </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label class="font-weight-bold">Time From</label>
+          <input
+            class="form-control"
+            type="time"
+            v-model="form.time_from"
+            :class="allerros.time_from ? 'border-danger' : ''"
+          />
+          <span class="text-danger" v-if="allerros.time_from">{{
+            allerros.time_from[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-2">
-          <div class="form-group">
-            <label class="font-weight-bold" for="target_time_to">Time To</label>
-            <input class="form-control" type="time" id="target_time_to" />
-          </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label class="font-weight-bold" for="target_time_to">Time To</label>
+          <input
+            v-model="form.time_to"
+            class="form-control"
+            type="time"
+            id="target_time_to"
+            :class="allerros.time_to ? 'border-danger' : ''"
+          />
+          <span class="text-danger" v-if="allerros.time_to">{{
+            allerros.time_to[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-md-12">
-          <div class="form-group">
-            <label class="font-weight-bold" for="cusmuer_desc"
-              >Custumer Description Order</label
-            >
-            <textarea
-              placeholder="Custumer Description Order"
-              class="form-control"
-              id="cusmuer_desc"
-            ></textarea>
-          </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="font-weight-bold">Description</label>
+          <textarea
+            v-model="form.description"
+            placeholder="Description.."
+            class="form-control"
+            :class="allerros.description ? 'border-danger' : ''"
+          ></textarea>
+          <span class="text-danger" v-if="allerros.description">{{
+            allerros.description[0]
+          }}</span>
         </div>
+      </div>
 
-        <div class="col-12 align-content-center">
-          <button class="btn btn-danger d-block m-auto font-weight-bold">
-            <i class="fas fa-plus-circle"></i> Add Order
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="col-12 align-content-center">
+        <button class="btn btn-danger d-block m-auto font-weight-bold">
+          <i class="fas fa-plus-circle"></i> Add Order
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 <script>
 import axios from "axios";
+import store from "@/store";
+
 export default {
   name: "AddOrder",
   data() {
@@ -139,8 +180,9 @@ export default {
       units: [],
       services: [],
       kinds: [
-        { id: 1, name: "Maintenance" },
-        { id: 2, name: "Previews" }
+        { id: 1, name: "maintenance" },
+        { id: 2, name: "preview" },
+        { id: 3, name: "other" }
       ],
       maintenances: [
         { id: 1, name: "Plumper" },
@@ -161,14 +203,14 @@ export default {
         { id: 6, name: "Others" }
       ],
       form: {
-        project: "",
-        unit: "",
-        maintenance: "",
-        targetDate: "",
-        timeFrom: "",
-        timeTo: "",
-        customerDesc: "",
-        kind: ""
+        project_id: "",
+        unit_id: "",
+        service_id: "",
+        target_date: "",
+        time_from: "",
+        time_to: "",
+        description: "",
+        type: ""
       }
     };
   },
@@ -184,6 +226,7 @@ export default {
   },
   methods: {
     async getUnits(event) {
+      store.dispatch("auth/attempt", localStorage.getItem("access_token"));
       const projectId = { project_id: event.target.value };
       if (projectId.project_id != "") {
         await axios.post("get-units", projectId).then(response => {
@@ -192,6 +235,32 @@ export default {
       } else {
         this.units = [];
       }
+    },
+    async addOrder() {
+      store.dispatch("auth/attempt", localStorage.getItem("access_token"));
+      await axios
+        .post("add-order-cs", this.form)
+        .then(() => {
+          this.allerros = [];
+          this.success = true;
+          this.form = {
+            project_id: "",
+            unit_id: "",
+            service_id: "",
+            target_date: "",
+            time_from: "",
+            time_to: "",
+            description: "",
+            kind: ""
+          };
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.allerros = error.response.data.errors;
+          } else {
+            this.allerros = [];
+          }
+        });
     }
   }
 };

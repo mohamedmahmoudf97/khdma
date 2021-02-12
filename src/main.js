@@ -1,15 +1,14 @@
+import "@coreui/coreui/scss/coreui.scss";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
-import { Form, HasError, AlertError, AlertErrors, AlertSuccess } from "vform";
+import CoreuiVue from "@coreui/vue";
+import { CSwitch, CButton } from "@coreui/vue";
+Vue.component("CButton", CButton);
 
-window.Form = Form;
-Vue.component(HasError.name, HasError);
-Vue.component(AlertError.name, AlertError);
-Vue.component(AlertErrors.name, AlertErrors);
-Vue.component(AlertSuccess.name, AlertSuccess);
+Vue.use(CoreuiVue);
 
 require("@/store/subscriber");
 axios.defaults.baseURL = "http://localhost:8000/api";
@@ -22,6 +21,7 @@ store
     new Vue({
       router,
       store,
+      CSwitch,
       render: h => h(App)
     }).$mount("#app");
   });

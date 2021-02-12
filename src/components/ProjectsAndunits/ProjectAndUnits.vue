@@ -64,7 +64,7 @@
     </div>
 
     <div
-      :class="model ? 'd-block modal-open' : 'd-none'"
+      :class="model ? 'd-block modal-open shadow' : 'd-none'"
       class="modal bd-example-modal-lg"
       id="unitModel"
       tabindex="-1"
@@ -193,6 +193,7 @@ export default {
     },
     closeModel() {
       this.model = false;
+      store.dispatch("auth/attempt", localStorage.getItem("access_token"));
     }
   }
 };
