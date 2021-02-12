@@ -4,6 +4,7 @@
       <div class="card-body">
         <form class="text-center" @submit.prevent="submit">
           <h1>Login</h1>
+
           <p>Sign In to your account</p>
 
           <p class="text-danger" v-if="allerros.error">
@@ -21,7 +22,6 @@
                 v-model="form.email"
                 type="text"
                 name="email"
-                id="email"
                 placeholder="Enter Email Address..."
                 class="form-control"
                 :class="allerros.email ? 'border-danger' : ''"
@@ -31,7 +31,6 @@
               allerros.email[0]
             }}</span>
           </div>
-
           <div role="group" class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">

@@ -32,27 +32,27 @@
 
       <div class="card-body" v-if="addNOrder == false">
         <!-- orders -->
+        <CSpinner
+          v-if="loading"
+          style="width:4rem;height:4rem; margin: 0 auto; display: block"
+          color="danger"
+          grow
+        />
         <CDataTable
+          v-if="!loading"
           :items="orders"
           :fields="fields"
           column-filter
           table-filter
-          :items-per-page="2"
+          :items-per-page="10"
           hover
           sorter
           pagination
         >
-          <template #status="{item}">
-            <td>
-              <CBadge :color="getBadge(item.type)">
-                {{ item.type }}
-              </CBadge>
-            </td>
-          </template>
           <template #show_details="{item, id}">
             <td class="py-2">
               <CButton
-                color="primary"
+                color="danger"
                 variant="outline"
                 square
                 size="sm"
@@ -99,15 +99,17 @@ export default {
   data() {
     return {
       addNOrder: false,
+      loading: true,
       orders: [],
       fields: [
-        { key: "id" },
-        { key: "project_id" },
-        { key: "unit_id" },
-        { key: "service_id" },
-        { key: "type" },
-        { key: "description" },
-        { key: "target_date" },
+        { key: "project_id", label: "Project" },
+        { key: "unit_id", label: "Unit" },
+        { key: "service_id", label: "Service" },
+        { key: "type", label: "Type" },
+        { key: "description", label: "Description" },
+        { key: "target_date", label: "Target Date" },
+        { key: "time_from", label: "Time From" },
+        { key: "time_to", label: "Time To" },
         {
           key: "show_details",
           label: "",
@@ -126,6 +128,7 @@ export default {
       .post("get-orders")
       .then(response => {
         this.orders = response.data.orders;
+        this.loading = false;
       })
       .catch(error => {
         console.log(error.response.data);
@@ -142,24 +145,7 @@ export default {
         this.addNOrder = false;
       }
     },
-
-    getBadge(status) {
-      switch (status) {
-        case "Active":
-          return "success";
-        case "Inactive":
-          return "secondary";
-        case "Pending":
-          return "warning";
-        case "Banned":
-          return "danger";
-        default:
-          "primary";
-      }
-    },
-
     toggleDetails(order) {
-      console.log(order.id);
       this.$set(order, "_toggled", !order._toggled);
       this.collapseDuration = 300;
       this.$nextTick(() => {

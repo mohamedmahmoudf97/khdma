@@ -37,8 +37,7 @@ import Login from "@/components/Login/Login.vue";
 export default {
   computed: {
     ...mapGetters({
-      authenticated: "auth/authenticated",
-      user: "auth/user"
+      authenticated: "auth/authenticated"
     })
   },
   components: {

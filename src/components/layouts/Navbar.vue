@@ -15,42 +15,26 @@
       <span class="c-header-toggler-icon"></span>
     </button>
 
-    <a
-      href="#/"
+    <router-link
+      to="/"
       class="c-header-brand mx-auto d-lg-none router-link-active"
       target="_self"
     >
-    </a>
-    <ul class="c-header-nav d-md-down-none mr-auto">
-      <li class="c-header-nav-item px-3">
-        <a
-          href="#/dashboard"
-          aria-current="page"
-          class="c-header-nav-link router-link-exact-active router-link-active"
-          target="_self"
+      <img src="../../assets/img/khedma.png" width="120px" />
+    </router-link>
+
+    <ul class="c-header-nav mr-4 ml-auto">
+      <CDropdown nav togglerText="User" placement="bottom-end" class="p-0">
+        <CDropdownItem class="text-center"
+          ><i class="fas fa-user-alt c-icon mr-1"></i> Profile</CDropdownItem
         >
-          Dashboard
-        </a>
-      </li>
-      <li class="c-header-nav-item px-3">
-        <a href="#/users" class="c-header-nav-link" target="_self"> Users </a>
-      </li>
-      <li class="c-header-nav-item px-3">
-        <a href="#" target="_self" class="c-header-nav-link"> Settings </a>
-      </li>
-    </ul>
-    <ul class="c-header-nav mr-4">
-      <li data-v-7983366c="" class="c-header-nav-items dropdown nav-item">
-        <a
-          href="#"
-          @click.prevent="logOut"
-          target="_self"
-          class="c-header-nav-link"
+        <CDropdownItem class="text-center"
+          ><i class="fas fa-cog c-icon mr-1"></i> Sittings</CDropdownItem
         >
-          <i class="fas fa-sign-out-alt mr-1" style="line-height: 1.5"></i>
-          Logout
-        </a>
-      </li>
+        <CDropdownItem @click.prevent="logOut" class="text-center"
+          ><i class="fas fa-sign-out-alt c-icon mr-1"></i>Logout</CDropdownItem
+        >
+      </CDropdown>
     </ul>
   </header>
 </template>
@@ -65,7 +49,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      authenticated: "auth/authenticated",
       user: "auth/user"
     })
   },
@@ -74,16 +57,22 @@ export default {
       this.side = "hide";
     },
     ...mapActions({
-      logOutAction: "auth/logOut"
-    }),
-
-    logOut() {
-      this.logOutAction().then(() => {
-        // this.$router.replace({
-        //   // name: ""
-        // })
-      });
-    }
+      logOut: "auth/logOut"
+    })
   }
 };
 </script>
+<style lang="scss">
+.dropdown-item {
+  display: block;
+}
+.c-header-nav .dropdown-item {
+  min-width: auto;
+}
+header {
+  .btn:focus,
+  .btn.focus {
+    box-shadow: none;
+  }
+}
+</style>
