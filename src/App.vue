@@ -10,7 +10,7 @@
           <!-- Content Wrapper -->
           <div class="c-body">
             <!-- Main Content -->
-            <main class="c-main">
+            <main class="c-main mx-2 py-2 mx-0">
               <router-view />
             </main>
           </div>

@@ -52,7 +52,8 @@
           </div>
 
           <button class="btn btn-danger font-weight-bold" style="width: 110px">
-            <i class="fas fa-sign-in-alt mr-1"></i> Login
+            <span v-if="loading"><Loading /></span>
+            <span v-else><i class="fas fa-sign-in-alt mr-1"></i> Login</span>
           </button>
         </form>
       </div>
@@ -62,6 +63,9 @@
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
+
+import Loading from "../Loading/LoadingComponent";
+
 export default {
   name: "Login",
   data() {
@@ -70,14 +74,15 @@ export default {
       form: {
         email: "",
         password: ""
-      }
+      },
+      loading: false
     };
   },
   methods: {
-    ...mapActions({
-      login: "auth/login"
-    }),
+    ...mapActions("auth", ["login"]),
     submit() {
+      this.loading = true;
+
       axios
         .post("login-user", this.form)
         .then(() => {
@@ -96,9 +101,13 @@ export default {
           }
         });
     }
+  },
+  components: {
+    Loading
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .form-control.border-danger:focus {
   box-shadow: 0 0 0 0.2rem rgba(229, 83, 83, 0.25) !important;

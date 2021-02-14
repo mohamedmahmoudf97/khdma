@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-bottom-danger mr-2 ml-2 shadow-lg">
+  <div class="card border-bottom-danger shadow-lg">
     <div class="card-header py-3">
       <h5 class="m-0 font-weight-bold">
         <i class="fas fa-house-user"></i> Projects And Units
@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <AddProject v-if="addProject == true" />
-      <AddUnits v-if="addProject == false" />
+      <AddProject v-if="addProject" />
+      <AddUnits v-else />
 
       <hr />
       <h4 class="text-center font-weight-bold">Projets With Units Data</h4>
